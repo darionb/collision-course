@@ -6,7 +6,6 @@ import particle
 
 # This file includes a set of functions useful for plotting
 # and animating objects of type: Particle.
-
 def playTime(sys,delta_t):
     # time per step
     h = 0.01 
@@ -14,10 +13,25 @@ def playTime(sys,delta_t):
     n = int(delta_t / h)
     for i in range(n):
         evolveOneStep(sys)
-        #fig = plt.figure()
-        plotSystem(sys)
-        for particle in sys:
-            print(particle)
+
+
+def playTimePlot(sys,delta_t,labels=False):
+    # time per step
+    h = 0.01 
+    # total time / time per step = number of steps required to evolve system.
+    n = int(delta_t / h)
+
+    if labels: 
+        labels = ' start'
+    plotSystem(sys,labels) #plot starting point of system
+    
+    #evolve system by n steps
+    for i in range(n):
+        evolveOneStep(sys)
+
+    if labels:
+        labels = ' end'
+    plotSystem(sys,labels) #plot system after time elapses
         
 #evolve system at one step of 0.01 seconds
 def evolveOneStep(sys):
@@ -33,7 +47,6 @@ def evolveOneStep(sys):
 
         hit = collisionCheck(sys[i],sys)
         if hit:
-            #sys[i].setV( elasticCollision() )
             elasticCollision(sys[i],hit)
 
         #position evolution
@@ -47,7 +60,7 @@ def evolveOneStep(sys):
         delta_VY = h * sys[i].getAcc()[1] #speed change in y-direction
         sys[i].addV([delta_VX, delta_VY])
 
-        wallBounce (sys[i],bounds)
+        #wallBounce (sys[i],bounds)
         
 def collisionCheck(particle,sys):
     # This function checks if the obj, particle is colliding 
@@ -102,14 +115,25 @@ def elasticCollision(p1,p2):
         
 
 #single frame of particle position and velocity vectors
-def plotSystem (sys):
+def plotSystem (sys,labels=False):
+    colors = ['blue','orange','green','red','yellow',
+            'purple','black','cyan','wheat',
+            'lime','darkred','gold','magenta','white',
+            'gray','navy','dodgerblue','olivedrab']
+    i = 0
     for obj in sys:
         #plotting object
-        plt.plot( obj.getPos()[0], obj.getPos()[1], 'o' )
+        x,y = obj.getPos()
+        plt.plot( x, y ,'o', color=colors[i] )
         #plotting velocity vector for obj
         plt.quiver( obj.getPos()[0],obj.getPos()[1], obj.getV()[0],obj.getV()[1] )
         plt.xlabel('position [m]')
         plt.ylabel('position [m]')
+        # labels specifying the start and end locations
+        if labels: 
+            name = 'p ' + str(i)
+            plt.text(x,y, name + labels)
+        i = i+1
 
 
 def init_figure(sys):
