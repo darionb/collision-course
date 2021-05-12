@@ -18,7 +18,6 @@ for i in range (n):
     # Add Particles to system positions and speed are 
     # randomized with randomValues = True and given a
     #  max speed of 25
-    #sys.append(Particle.Particle(randomValues=True,bounds=sim_size,max_radius=1,max_speed=100))
    sys.append(particle.Particle())
    sys[i].randomize(sim_size,50,max_radius=15,max_speed=30)
 
@@ -65,5 +64,5 @@ def animate_frame(i):
     return circle_list
 
 # function from matplotlib.animation creates and displayes the animation
-animation = ani.FuncAnimation(fig, func=animate_frame, interval= 50)
+animation = ani.FuncAnimation(fig, func=animate_frame, interval= 100)
 plt.show()
