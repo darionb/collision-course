@@ -69,6 +69,5 @@ class Particle:
 
         
     def __str__(self):
-        return "this particle has the following properties: " + str(self.getMass()) +'[kg]  '+ str(self.getPos()) + '[m]  ' + str(self.getV())+ '[m/s] '+ str(self.getCharge())+ '[C]'
-
-    
+        return ("this particle has the following properties: " + str(self.getMass()) +'[kg]  '
+        + str(self.getPos()) + '[m]  '+ str(self.getV())+ '[m/s] '+ str(self.getCharge())+ '[C]')
